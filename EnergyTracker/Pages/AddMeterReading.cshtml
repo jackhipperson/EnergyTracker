@@ -1,0 +1,28 @@
+﻿@page
+@model EnergyTracker.Pages.AddMeterReadingModel
+@{
+}
+
+<h1 class="mb-3">Add Meter Reading</h1>
+
+<div class="col-4">
+    <form method="post">
+        <input hidden value="1" asp-for="AddedMeterReading.UserId" />
+        <div class="mb-3">
+            <label class="form-label" for="electric-reading">Electric Reading</label>
+            <input type="number" class="form-control" id="electric-reading" aria-describedby="Electric Reading" asp-for="AddedMeterReading.ElectricReading" />
+            <span asp-validation-for="AddedMeterReading.ElectricReading"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="gas-reading">Gas Reading</label>
+            <input type="number" step=".001" class="form-control" id="gas-reading" aria-describedby="Gas Reading" asp-for="AddedMeterReading.GasReading" />
+            <span asp-validation-for="AddedMeterReading.GasReading"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="reading-date">Reading Date</label>
+            <input type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="reading-date" aria-describedby="Reading Date" asp-for="AddedMeterReading.ReadingDate" />
+            <span asp-validation-for="AddedMeterReading.ReadingDate"></span>
+        </div>
+        <button onclick="" type="submit" class="btn btn-primary">Add Reading</button>
+    </form>
+</div>

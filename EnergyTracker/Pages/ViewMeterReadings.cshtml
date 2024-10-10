@@ -1,0 +1,52 @@
+﻿@page
+@using EnergyTracker.Models
+@model EnergyTracker.Pages.ViewMeterReadingsModel
+@{
+}
+
+<h1 class="mb-3">View Meter Readings</h1>
+
+@if (Model.MeterReadings is not null && Model.MeterReadings.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Reading Date</td>
+                <td>Electricity</td>
+                <td>Gas</td>
+                <td></td>
+            </tr>
+        </thead>
+        @foreach (MeterReadingModel reading in Model.MeterReadings)
+        {
+            <tr>
+                <td>@reading.ReadingDate.ToShortDateString()</td>
+                <td>@reading.ElectricReading</td>
+                <td>@reading.GasReading</td>
+                <td>
+                    <form method="post">
+                        <input hidden name="id" value="@reading.Id" />
+                        <button class="btn btn-primary">Edit</button>
+                        <button asp-page-handler="Delete" type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No readings found.</p>
+}
+
+
+@section Scripts {
+    <script>
+
+        var deleteInput = document.getElementById("deleteId")
+
+        function handleClick(id) {
+            deleteInput.value = id
+        }
+    </script>
+}
