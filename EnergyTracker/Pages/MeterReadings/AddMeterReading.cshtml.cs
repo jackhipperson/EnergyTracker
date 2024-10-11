@@ -4,7 +4,7 @@ using EnergyTracker.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EnergyTracker.Pages
+namespace EnergyTracker.Pages.MeterReadings
 {
     public class AddMeterReadingModel : PageModel
     {

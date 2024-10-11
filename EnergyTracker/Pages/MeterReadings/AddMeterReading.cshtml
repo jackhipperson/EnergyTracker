@@ -1,5 +1,5 @@
-﻿@page
-@model EnergyTracker.Pages.AddMeterReadingModel
+﻿@page "/AddMeterReading"
+@model AddMeterReadingModel
 @{
 }
 
@@ -23,6 +23,6 @@
             <input type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="reading-date" aria-describedby="Reading Date" asp-for="AddedMeterReading.ReadingDate" />
             <span asp-validation-for="AddedMeterReading.ReadingDate"></span>
         </div>
-        <button onclick="" type="submit" class="btn btn-primary">Add Reading</button>
+        <button type="submit" class="btn btn-primary">Add Reading</button>
     </form>
 </div>

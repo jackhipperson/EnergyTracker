@@ -3,7 +3,7 @@ using EnergyTracker.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EnergyTracker.Pages
+namespace EnergyTracker.Pages.MeterReadings
 {
     public class ViewMeterReadingsModel : PageModel
     {
@@ -21,7 +21,7 @@ namespace EnergyTracker.Pages
             MeterReadings = meterReadingRepository.GetAllReadingsAsync().Result.ToList();
         }
 
-        public async Task<IActionResult> OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDelete(Guid id)
         {
             await meterReadingRepository.DeleteReading(id);
             return RedirectToPage("/ViewMeterReadings");

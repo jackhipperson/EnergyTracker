@@ -10,8 +10,9 @@ namespace EnergyTracker.Repositories
 
         public Task<MeterReadingModel> EditMeterReading(MeterReadingModel meterReading);
 
-        public Task<bool> DeleteReading(int id);
+        public Task<bool> DeleteReading(Guid id);
 
+        public Task<MeterReadingModel> GetMeterReading(Guid id);
         public Task<IEnumerable<MeterReadingModel>> GetAllReadingsAsync();
     }
 }

@@ -18,7 +18,7 @@ namespace EnergyTracker.Repositories
             return meterReading;
         }
 
-        public async Task<bool> DeleteReading(int id)
+        public async Task<bool> DeleteReading(Guid id)
         {
             MeterReadingModel reading = await dbContext.MeterReadings.FindAsync(id);
             if (reading != null)
@@ -41,6 +41,11 @@ namespace EnergyTracker.Repositories
         public async Task<IEnumerable<MeterReadingModel>> GetAllReadingsAsync()
         {
             return await dbContext.MeterReadings.ToListAsync();
+        }
+
+        public async Task<MeterReadingModel> GetMeterReading(Guid id)
+        {
+            return await dbContext.MeterReadings.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
