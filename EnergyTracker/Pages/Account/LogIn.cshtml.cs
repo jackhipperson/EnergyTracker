@@ -1,15 +1,17 @@
+using EnergyTracker.Models;
 using EnergyTracker.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EnergyTracker.Pages.LogIn
+namespace EnergyTracker.Pages.Account
 {
     public class LogInModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly SignInManager<UserModel> signInManager;
 
-        public LogInModel(SignInManager<IdentityUser> signInManager)
+        public LogInModel(SignInManager<UserModel> signInManager)
         {
             this.signInManager = signInManager;
         }
@@ -23,16 +25,16 @@ namespace EnergyTracker.Pages.LogIn
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser();
-                {
-                    user.UserName = User.UserName;
-                }
 
-                var result = await signInManager.PasswordSignInAsync(user, User.Password, false, false);
+                var result = await signInManager.PasswordSignInAsync(User.UserName, User.Password, false, false);
 
                 if (result.Succeeded)
                 {
-                    return RedirectToPage("/");
+                    return RedirectToPage("/Index");
+                }
+                else
+                {
+                    ModelState.AddModelError(String.Empty, "Unable to log in, please check your username and password and try again.");
                 }
             }
             return Page();

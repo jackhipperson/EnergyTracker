@@ -1,4 +1,6 @@
 ﻿using EnergyTracker.Models;
+using EnergyTracker.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

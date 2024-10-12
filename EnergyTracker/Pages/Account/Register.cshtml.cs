@@ -1,17 +1,20 @@
+using EnergyTracker.Models;
 using EnergyTracker.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace EnergyTracker.Pages.LogIn
+namespace EnergyTracker.Pages.Account
 {
-    public class SignUpModel : PageModel
+    public class RegisterModel : PageModel
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<UserModel> userManager;
+        private readonly SignInManager<UserModel> signInManager;
 
-        public SignUpModel(UserManager<IdentityUser> userManager)
+        public RegisterModel(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [BindProperty]
@@ -24,14 +27,15 @@ namespace EnergyTracker.Pages.LogIn
         {
             if (ModelState.IsValid)
             {
-                IdentityUser user = new();
+                UserModel user = new();
                 {
                     user.UserName = User.UserName;
                 }
                 var identityResult = await userManager.CreateAsync(user, User.Password);
                 if (identityResult.Succeeded)
                 {
-                    return RedirectToPage("/LogIn/LogIn");
+                    await signInManager.PasswordSignInAsync(user, User.Password, false, false);
+                    return RedirectToPage("/");
                 }
                 else
                 {

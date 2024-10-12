@@ -4,6 +4,5 @@ namespace EnergyTracker.Models
 {
     public class UserModel : IdentityUser
     {
-        public string UserName { get; set; }
     }
 }

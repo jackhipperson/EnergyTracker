@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace EnergyTracker.Models.ViewModels
 {
-    public class UserViewModel
+    public class UserViewModel : IdentityUser
     {
         [Required]
         public string UserName { get; set; }

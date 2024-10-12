@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using EnergyTracker.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<UserModel> signInManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,25 +28,51 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" href="#" id="meterReadingsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Meter Readings
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="meterReadingsDropdown">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MeterReadings/AddMeterReading">Add Reading</a>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/MeterReadings/ViewMeterReadings">View All Readings</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link text-dark dropdown-toggle" href="#" id="TariffDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Tariffs
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="TariffDropdown">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Tariffs/AddTariff">Add Tariff</a>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Tariffs/ViewTariffs">View All Tariffs</a>
-                            </div>
-                        </li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" id="meterReadingsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Meter Readings
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="meterReadingsDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/MeterReadings/AddMeterReading">Add Reading</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/MeterReadings/ViewMeterReadings">View All Readings</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" id="TariffDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Tariffs
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="TariffDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Tariffs/AddTariff">Add Tariff</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Tariffs/ViewTariffs">View All Tariffs</a>
+                                </div>
+                            </li>
+                        }
                     </ul>
+                    <ul class="navbar-nav">
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-dark dropdown-toggle" href="#" id="AccountDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @User?.Identity?.Name
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="AccountDropdown">
+                                    <a class="nav-link text-dark" asp-area="" asp-page="/Account/LogOut">Log Out</a>
+                                </div>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Register">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">LogIn</a>
+                            </li>
+                        }
+                    </ul>
+
                 </div>
             </div>
         </nav>

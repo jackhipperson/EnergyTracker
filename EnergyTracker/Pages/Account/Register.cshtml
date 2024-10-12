@@ -1,0 +1,32 @@
+﻿@page "/Register"
+@model EnergyTracker.Pages.Account.RegisterModel
+@{
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card">
+                <form method="post">
+                    <div class="card-body">
+                        <h5 class="card-title">Register</h5>
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label class="form-label" for="username">Username</label>
+                            <input type="text" id="username" asp-for="User.UserName" class="form-control" />
+                            <span asp-validation-for="User.UserName"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="password">Password</label>
+                            <input type="password" id="password" asp-for="User.Password" class="form-control" />
+                            <span asp-validation-for="User.Password"></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary mb-3">Register</button>
+                        <p>If you already have an account you can <a href="/LogIn">log in</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
