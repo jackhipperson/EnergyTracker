@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using EnergyTracker.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace EnergyTracker.Models
+namespace EnergyTracker.Data
 {
     public class AppDbContext : IdentityDbContext<UserModel>
     {

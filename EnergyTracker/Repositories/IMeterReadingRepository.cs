@@ -1,5 +1,4 @@
 ﻿using EnergyTracker.Models;
-using System.Collections.Generic;
 
 namespace EnergyTracker.Repositories
 {

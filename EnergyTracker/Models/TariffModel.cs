@@ -6,7 +6,7 @@ public class TariffModel
 {
     public Guid Id { get; set; }
     [Required]
-    [Display(Name="Tariff Description")]
+    [Display(Name="Tariffs Description")]
     public string Description { get; set; }
     [Display(Name = "Gas Unit Rate")]
     public decimal? GasUnitRate { get; set; }
@@ -16,9 +16,10 @@ public class TariffModel
     public decimal? ElectricUnitRate { get; set; }
     [Display(Name = "Electricity Standing Rate")]
     public decimal? ElectricStandingRate { get; set; }
-    [Display(Name = "Tariff Start Date")]
+    [Display(Name = "Tariffs Start Date")]
     public DateTime StartDate { get; set; }
-    [Display(Name = "Tariff End Date")]
+    [Display(Name = "Tariffs End Date")]
     public DateTime? EndDate { get; set; }
+    public Guid UserId { get; set; }
 
 }

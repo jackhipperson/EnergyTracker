@@ -1,0 +1,92 @@
+﻿@page "/AddTariff"
+@model EnergyTracker.Pages.Tariffs.AddTariffModel
+@{
+}
+
+<h1 class="mb-3">Add Tariff</h1>
+
+<form method="post">
+    <div class="container">
+        <div class="row">
+            <div class="mb-3">
+                <label class="form-label" for="description">Tariff Name or Description</label>
+                <input type="text" class="form-control" id="description" aria-describedby="Tariff Name or Description" asp-for="Tariff.Description" />
+                <span asp-validation-for="Tariff.Description"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <input hidden value="1" asp-for="Tariff.UserId" />
+                <div class="mb-3">
+                    <label class="form-label" for="electric-unit">Electric Unit Rate (pence/unit)</label>
+                    <input type="number" step=".001" class="form-control" id="electric-unit" aria-describedby="Electric Unit Rate (pence/unit)" asp-for="Tariff.ElectricUnitRate" />
+                    <span asp-validation-for="Tariff.ElectricUnitRate"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="gas-unit">Gas Unit Rate (pence/unit)</label>
+                    <input type="number" step=".001" class="form-control" id="gas-unit" aria-describedby="Gas Unit Rate (pence/unit)" asp-for="Tariff.GasUnitRate" />
+                    <span asp-validation-for="Tariff.GasUnitRate"></span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label" for="electric-standing">Electric Standing Rate (pence/day)</label>
+                    <input type="number" step=".001" class="form-control" id="electric-standing" aria-describedby="Electric Standing Rate (pence/day)" asp-for="Tariff.ElectricStandingRate" />
+                    <span asp-validation-for="Tariff.ElectricStandingRate"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="gas-standing">Gas Standing Rate (pence/day)</label>
+                    <input type="number" step=".001" class="form-control" id="gas-standing" aria-describedby="Gas Standing Rate (pence/day)" asp-for="Tariff.GasStandingRate" />
+                    <span asp-validation-for="Tariff.GasStandingRate"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="custom-control custom-checkbox mb-3">
+                <input onclick="hideEndDate()" type="checkbox" class="custom-control-input" id="currentTariff">
+                <label class="custom-control-label" for="customCheck1">Current tariff?</label>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <div class="mb-3">
+                    <label class="form-label" for="start-date">Tariff Start Date</label>
+                    <input type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="start-date" aria-describedby="Tariff Start Date" asp-for="Tariff.StartDate" />
+                    <span asp-validation-for="Tariff.StartDate"></span>
+                </div>
+            </div>
+            <div class="col">
+                <div class="mb-3" id="endDateDiv">
+                    <label class="form-label" for="end-date">Tariff End Date</label>
+                    <input type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="end-date" aria-describedby="Tariff End Date" asp-for="Tariff.EndDate" />
+                    <span asp-validation-for="Tariff.EndDate"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Add Tariff</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        var checkbox = document.getElementById("currentTariff")
+        var endDateInputDiv = document.getElementById("endDateDiv")
+
+        function hideEndDate() {
+            var startDateInput = document.getElementById("start-date")
+            var endDateInput = document.getElementById("end-date")
+
+            if (checkbox.checked) {
+                endDateInputDiv.style.display = "none"
+                endDateInput.value = ""
+            } else {
+                endDateInputDiv.style.display = "block"
+                endDateInput.value = startDateInput.value
+            }
+        }
+
+    </script>
+}

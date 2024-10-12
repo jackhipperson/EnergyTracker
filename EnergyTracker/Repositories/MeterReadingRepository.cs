@@ -1,4 +1,5 @@
-﻿using EnergyTracker.Models;
+﻿using EnergyTracker.Data;
+using EnergyTracker.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EnergyTracker.Repositories

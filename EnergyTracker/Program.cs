@@ -1,4 +1,4 @@
-using EnergyTracker.Models;
+using EnergyTracker.Data;
 using EnergyTracker.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +17,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<AppDbContext>().AddDefaultUI();
 
 builder.Services.AddScoped<IMeterReadingRepository, MeterReadingRepository>();
+builder.Services.AddScoped<ITariffRepository, TariffRepository>();
 
 var app = builder.Build();
 

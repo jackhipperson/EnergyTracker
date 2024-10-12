@@ -37,7 +37,7 @@ namespace EnergyTracker.Pages.MeterReadings
 
                 await meterReadingRepository.AddMeterReading(submittedMeterReading);
 
-                return RedirectToPage("/Index");
+                return RedirectToPage("/MeterReadings/ViewMeterReadings");
             }
 
             return Page();
