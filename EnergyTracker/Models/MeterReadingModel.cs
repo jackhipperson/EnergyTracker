@@ -13,5 +13,5 @@ public class MeterReadingModel
     public decimal? ElectricReading { get; set; }
     [Display(Name="Gas Reading")]
     public decimal? GasReading { get; set; }
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
 }

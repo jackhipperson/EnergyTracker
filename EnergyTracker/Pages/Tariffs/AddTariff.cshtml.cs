@@ -1,19 +1,18 @@
 using EnergyTracker.Models;
 using EnergyTracker.Models.ViewModels;
 using EnergyTracker.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EnergyTracker.Pages.Tariffs
 {
-    public class AddTariffModel : PageModel
+    [Authorize]
+    public class AddTariffModel(UserManager<UserModel> userManager, ITariffRepository tariffRepository) : PageModel
     {
-        private readonly ITariffRepository tariffRepository;
-
-        public AddTariffModel(ITariffRepository tariffRepository)
-        {
-            this.tariffRepository = tariffRepository;
-        }
+        private readonly UserManager<UserModel> userManager = userManager;
+        private readonly ITariffRepository tariffRepository = tariffRepository;
 
         [BindProperty]
         public Tariff Tariff { get; set; }
@@ -25,6 +24,7 @@ namespace EnergyTracker.Pages.Tariffs
         {
             if (ModelState.IsValid)
             {
+                string userId = userManager.GetUserId(User);
                 TariffModel newTariff = new();
                 {
                     newTariff.Id = new Guid();
@@ -35,7 +35,7 @@ namespace EnergyTracker.Pages.Tariffs
                     newTariff.GasUnitRate = Tariff.GasUnitRate;
                     newTariff.StartDate = Tariff.StartDate;
                     newTariff.EndDate = Tariff.EndDate;
-                    newTariff.UserId = Tariff.UserId;
+                    newTariff.UserId = Guid.Parse(userId);
                 }
                 await tariffRepository.AddTariff(newTariff);
                 return RedirectToPage("Tariffs/ViewTariffs");

@@ -34,14 +34,22 @@ namespace EnergyTracker.Repositories
             }
         }
 
-        public Task<MeterReadingModel> EditMeterReading(MeterReadingModel meterReading)
+        public async Task<MeterReadingModel> EditMeterReading(MeterReadingModel meterReading)
         {
-            throw new NotImplementedException();
+            var editingReading = await dbContext.MeterReadings.FindAsync(meterReading.Id);
+            if (editingReading != null)
+            {
+                editingReading.ElectricReading = meterReading.ElectricReading;
+                editingReading.GasReading = meterReading.GasReading;
+                editingReading.ReadingDate = meterReading.ReadingDate;
+            }
+            dbContext.SaveChanges();
+            return meterReading;
         }
 
-        public async Task<IEnumerable<MeterReadingModel>> GetAllReadingsAsync()
+        public async Task<IEnumerable<MeterReadingModel>> GetAllReadingsAsync(Guid userId)
         {
-            return await dbContext.MeterReadings.ToListAsync();
+            return await dbContext.MeterReadings.Where(x => x.UserId == userId).ToListAsync();
         }
 
         public async Task<MeterReadingModel> GetMeterReading(Guid id)

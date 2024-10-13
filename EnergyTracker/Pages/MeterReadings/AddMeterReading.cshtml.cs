@@ -1,19 +1,18 @@
 using EnergyTracker.Models;
 using EnergyTracker.Models.ViewModels;
 using EnergyTracker.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EnergyTracker.Pages.MeterReadings
 {
-    public class AddMeterReadingModel : PageModel
+    [Authorize]
+    public class AddMeterReadingModel(IMeterReadingRepository meterReadingRepository, UserManager<UserModel> userManager) : PageModel
     {
-        private readonly IMeterReadingRepository meterReadingRepository;
-
-        public AddMeterReadingModel(IMeterReadingRepository meterReadingRepository)
-        {
-            this.meterReadingRepository = meterReadingRepository;
-        }
+        private readonly IMeterReadingRepository meterReadingRepository = meterReadingRepository;
+        private readonly UserManager<UserModel> userManager = userManager;
 
         [BindProperty]
         public MeterReading AddedMeterReading { get; set; }
@@ -26,13 +25,14 @@ namespace EnergyTracker.Pages.MeterReadings
         {
             if (ModelState.IsValid)
             {
-                MeterReadingModel submittedMeterReading = new MeterReadingModel()
+                string userId = userManager.GetUserId(User);
+                MeterReadingModel submittedMeterReading = new()
                 {
                     Id = new Guid(),
                     ElectricReading = AddedMeterReading.ElectricReading,
                     GasReading = AddedMeterReading.GasReading,
                     ReadingDate = AddedMeterReading.ReadingDate,
-                    UserId = AddedMeterReading.UserId,
+                    UserId = Guid.Parse(userId),
                 };
 
                 await meterReadingRepository.AddMeterReading(submittedMeterReading);

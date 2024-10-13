@@ -19,6 +19,5 @@ namespace EnergyTracker.Models.ViewModels
         public DateTime StartDate { get; set; }
         [Display(Name = "Tariffs End Date")]
         public DateTime? EndDate { get; set; }
-        public Guid UserId { get; set; }
     }
 }

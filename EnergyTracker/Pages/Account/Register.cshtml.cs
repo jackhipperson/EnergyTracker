@@ -6,16 +6,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EnergyTracker.Pages.Account
 {
-    public class RegisterModel : PageModel
+    public class RegisterModel(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager) : PageModel
     {
-        private readonly UserManager<UserModel> userManager;
-        private readonly SignInManager<UserModel> signInManager;
-
-        public RegisterModel(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager)
-        {
-            this.userManager = userManager;
-            this.signInManager = signInManager;
-        }
+        private readonly UserManager<UserModel> userManager = userManager;
+        private readonly SignInManager<UserModel> signInManager = signInManager;
 
         [BindProperty]
         public UserViewModel User { get; set; }
