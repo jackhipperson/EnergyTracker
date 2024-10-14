@@ -1,0 +1,67 @@
+﻿@page "/ViewTariffs"
+@using EnergyTracker.Models
+@model EnergyTracker.Pages.Tariffs.ViewTariffsModel
+@{
+}
+
+<h1 class="mb-3">View Tariffs</h1>
+<a href="/AddTariff" class="btn btn-primary mb-3">Add Tariff</a>
+
+@if (Model.UserTariffs is not null && Model.UserTariffs.Any())
+{
+    @if (Model.GapList is not null && Model.GapList.Any())
+    {
+        <p class="text-danger">There are gaps in your tariff history:</p>
+        foreach (TariffModel error in Model.GapList)
+        {
+            <p class="text-danger">@error.EndDate and @error.StartDate</p>
+        }
+    }
+
+    @if (Model.OverlapList is not null && Model.OverlapList.Any())
+    {
+        <p class="text-danger">There are overlaps in your tariff history:</p>
+        foreach (TariffModel error in Model.OverlapList)
+        {
+            <p class="text-danger">@error.Description -  @error.StartDate and @error.EndDate</p>
+        }
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Tariff Name</td>
+                <td>Start Date</td>
+                <td>End Date</td>
+                <td>Electricity Unit Cost</td>
+                <td>Electricity Standing Cost</td>
+                <td>Gas Unit Cost</td>
+                <td>Gas Standing Cost</td>
+                <td></td>
+            </tr>
+        </thead>
+        @foreach (TariffModel tariff in Model.UserTariffs)
+        {
+            <tr>
+                <td>@tariff.Description</td>
+                <td>@tariff.StartDate.ToShortDateString()</td>
+                <td>@tariff.EndDate?.ToShortDateString()</td>
+                <td>@tariff.ElectricStandingRate</td>
+                <td>@tariff.ElectricUnitRate</td>
+                <td>@tariff.GasStandingRate</td>
+                <td>@tariff.GasUnitRate</td>
+                <td>
+                    <form method="post">
+                        <input hidden name="id" value="@tariff.Id" />
+                        <a href="/EditTariff/@tariff.Id" class="btn btn-primary">Edit</a>
+                        <button asp-page-handler="Delete" type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p>No tariffs found.</p>
+}

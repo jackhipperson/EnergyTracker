@@ -4,14 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EnergyTracker.Repositories
 {
-    public class MeterReadingRepository : IMeterReadingRepository
+    public class MeterReadingRepository(AppDbContext dbContext) : IMeterReadingRepository
     {
-        private readonly AppDbContext dbContext;
+        private readonly AppDbContext dbContext = dbContext;
 
-        public MeterReadingRepository(AppDbContext dbContext)
-        {
-            this.dbContext = dbContext;
-        }
         public async Task<MeterReadingModel> AddMeterReading(MeterReadingModel meterReading)
         {
             await dbContext.MeterReadings.AddAsync(meterReading);

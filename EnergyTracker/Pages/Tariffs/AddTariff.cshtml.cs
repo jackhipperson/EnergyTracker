@@ -38,7 +38,7 @@ namespace EnergyTracker.Pages.Tariffs
                     newTariff.UserId = Guid.Parse(userId);
                 }
                 await tariffRepository.AddTariff(newTariff);
-                return RedirectToPage("Tariffs/ViewTariffs");
+                return RedirectToPage("/Tariffs/ViewTariffs");
             }
             return Page();
         }

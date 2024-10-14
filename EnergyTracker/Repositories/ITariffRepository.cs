@@ -1,4 +1,5 @@
 ﻿using EnergyTracker.Models;
+using EnergyTracker.Models.ViewModels;
 
 namespace EnergyTracker.Repositories
 {
@@ -9,6 +10,7 @@ namespace EnergyTracker.Repositories
         public Task<TariffModel> AddTariff(TariffModel tariff);
         public Task<TariffModel> EditTariff(TariffModel tariff);
         public Task<bool> DeleteTariff(Guid id);
-
+        Task<List<TariffError>> GetOverlapsAsync(Guid userId);
+        Task<List<TariffError>> GetGapsAsync(Guid userId);
     }
 }
