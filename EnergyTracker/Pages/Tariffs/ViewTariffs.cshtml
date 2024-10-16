@@ -1,5 +1,6 @@
 ﻿@page "/ViewTariffs"
 @using EnergyTracker.Models
+@using EnergyTracker.Models.ViewModels
 @model EnergyTracker.Pages.Tariffs.ViewTariffsModel
 @{
 }
@@ -11,19 +12,19 @@
 {
     @if (Model.GapList is not null && Model.GapList.Any())
     {
-        <p class="text-danger">There are gaps in your tariff history:</p>
+        <p class="text-danger lh-1">There are gaps in your tariff history:</p>
         foreach (TariffModel error in Model.GapList)
         {
-            <p class="text-danger">@error.EndDate and @error.StartDate</p>
+            <p class="text-danger lh-1">@error.StartDate.ToShortDateString() and @error.EndDate?.ToShortDateString()</p>
         }
     }
 
     @if (Model.OverlapList is not null && Model.OverlapList.Any())
     {
-        <p class="text-danger">There are overlaps in your tariff history:</p>
+        <p class="text-danger lh-1">There are overlaps in your tariff history:</p>
         foreach (TariffModel error in Model.OverlapList)
         {
-            <p class="text-danger">@error.Description -  @error.StartDate and @error.EndDate</p>
+            <p class="text-danger lh-1">@error.Description -  @error.StartDate.ToShortDateString() and @error.EndDate?.ToShortDateString()</p>
         }
     }
 

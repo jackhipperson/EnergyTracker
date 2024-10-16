@@ -55,51 +55,83 @@ namespace EnergyTracker.Repositories
             return await dbContext.Tariffs.Where(x => x.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<List<TariffError>> GetGapsAsync(Guid userId)
+        public async Task<List<TariffModel>> GetGapsAsync(Guid userId)
         {
             var gapQuery = @"
-            SELECT
-                t1.Id,
-                t1.Description,
-                t2.StartDate,
-                t1.EndDate,
-            FROM
-                Tariffs t1,
-                Tariffs t2
-            WHERE
-                t1.UserId = {0} AND
-                t2.UserId = {0} AND
-                t1.EndDate < t2.StartDate
-            ORDER BY
-                t1.EndDate;";
+        WITH OrderedTariffs AS (
+            SELECT 
+                Id, 
+                Description, 
+                StartDate, 
+                COALESCE(EndDate, '9999-12-31') AS EndDate,
+                UserId,
+                ROW_NUMBER() OVER (ORDER BY StartDate) AS RowNum
+            FROM 
+                Tariffs
+            WHERE 
+                UserId = {0}
+        )
+        SELECT 
+            CurrentTariff.Id,
+            'Gap' AS Description,
+            CurrentTariff.EndDate AS StartDate,
+            NextTariff.StartDate AS EndDate,
+            NULL AS GasUnitRate,
+            NULL AS GasStandingRate,
+            NULL AS ElectricUnitRate,
+            NULL AS ElectricStandingRate,
+            CurrentTariff.UserId
+        FROM 
+            OrderedTariffs CurrentTariff
+        INNER JOIN 
+            OrderedTariffs NextTariff ON CurrentTariff.RowNum = NextTariff.RowNum - 1
+        WHERE 
+            CurrentTariff.EndDate < NextTariff.StartDate
+        ORDER BY 
+            CurrentTariff.EndDate;";
 
-            return await dbContext.Tariffs.FromSqlRaw(gapQuery, userId).ToListAsync();
+            return await dbContext.Tariffs
+                .FromSqlRaw(gapQuery, userId)
+                .ToListAsync();
         }
 
-        public async Task<List<TariffError>> GetOverlapsAsync(Guid userId)
+
+        public async Task<List<TariffModel>> GetOverlapsAsync(Guid userId)
         {
             var overlapQuery = @"
-            SELECT
-                t1.Id
-                t1.Description,
-                t1.StartDate,
-                t1.EndDate,
-                t2.Description,
-                t2.StartDate,
-                t2.EndDate
-            FROM
-                Tariffs t1,
-                Tariffs t2
-            WHERE
-                t1.UserId = {0} AND
-                t2.UserId = {0} AND
-                t1.ID != t2.ID AND
-                t1.StartDate < t2.EndDate AND
-                t2.StartDate < t1.EndDate
-            ORDER BY
-                t1.StartDate;";
+            WITH OrderedTariffs AS (
+                SELECT 
+                    Id, 
+                    Description, 
+                    StartDate, 
+                    EndDate,
+                    UserId, 
+                    ROW_NUMBER() OVER (ORDER BY StartDate) AS RowNum
+                FROM 
+                    Tariffs
+                WHERE 
+                    UserId = {0}
+            )
+            SELECT 
+                CurrentTariff.Id,
+                'Gap' AS Description,
+                CurrentTariff.EndDate AS StartDate,
+                NextTariff.StartDate AS EndDate,
+                NULL AS GasUnitRate,
+                NULL AS GasStandingRate,
+                NULL AS ElectricUnitRate,
+                NULL AS ElectricStandingRate,
+                CurrentTariff.UserId
+            FROM 
+                OrderedTariffs CurrentTariff
+            LEFT JOIN 
+                OrderedTariffs NextTariff ON CurrentTariff.RowNum = NextTariff.RowNum - 1
+            WHERE 
+                CurrentTariff.EndDate < NextTariff.StartDate
+            ORDER BY 
+                CurrentTariff.EndDate;";
 
-            return await dbContext.Tariffs.FromSqlRaw(overlapQuery, userId).ToListAsync();
+            return await dbContext.Set<TariffModel>().FromSqlRaw(overlapQuery, userId).ToListAsync();
         }
     }
 

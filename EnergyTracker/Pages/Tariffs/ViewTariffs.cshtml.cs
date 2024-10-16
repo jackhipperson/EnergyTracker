@@ -13,8 +13,8 @@ namespace EnergyTracker.Pages.Tariffs
         private readonly UserManager<UserModel> userManager = userManager;
 
         public IEnumerable<TariffModel> UserTariffs { get; set; }
-        public List<TariffError> GapList { get; set; }
-        public List<TariffError> OverlapList { get; set; }
+        public List<TariffModel> GapList { get; set; }
+        public List<TariffModel> OverlapList { get; set; }
         public async void OnGet()
         {
             Guid userId = Guid.Parse(userManager.GetUserId(User));
