@@ -21,7 +21,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" for="reading-date">Reading Date</label>
-            <input type="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" id="reading-date" aria-describedby="Reading Date" asp-for="MeterReading.ReadingDate" />
+            <input type="date" class="form-control" id="reading-date" aria-describedby="Reading Date" asp-for="MeterReading.ReadingDate" />
             <span asp-validation-for="MeterReading.ReadingDate"></span>
         </div>
         <button type="submit" class="btn btn-primary">Edit Reading</button>

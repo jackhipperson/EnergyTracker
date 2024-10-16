@@ -2,6 +2,7 @@ using EnergyTracker.Models;
 using EnergyTracker.Models.ViewModels;
 using EnergyTracker.Repositories;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,12 @@ namespace EnergyTracker.Pages.Tariffs
             GapList = await tariffRepository.GetGapsAsync(userId);
             OverlapList = await tariffRepository.GetOverlapsAsync(userId);
 
+        }
+
+        public async Task<IActionResult> OnPostDelete(Guid id)
+        {
+            await tariffRepository.DeleteTariff(id);
+            return RedirectToPage("/Tariffs/ViewTariffs");
         }
     }
 }

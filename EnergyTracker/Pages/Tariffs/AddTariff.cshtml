@@ -18,24 +18,24 @@
             <div class="col">
                 <div class="mb-3">
                     <label class="form-label" for="electric-unit">Electric Unit Rate (pence/unit)</label>
-                    <input type="number" step=".001" class="form-control" id="electric-unit" aria-describedby="Electric Unit Rate (pence/unit)" asp-for="Tariff.ElectricUnitRate" />
+                    <input type="number" step=".0001" class="form-control" id="electric-unit" aria-describedby="Electric Unit Rate (pence/unit)" asp-for="Tariff.ElectricUnitRate" />
                     <span asp-validation-for="Tariff.ElectricUnitRate"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gas-unit">Gas Unit Rate (pence/unit)</label>
-                    <input type="number" step=".001" class="form-control" id="gas-unit" aria-describedby="Gas Unit Rate (pence/unit)" asp-for="Tariff.GasUnitRate" />
+                    <input type="number" step=".0001" class="form-control" id="gas-unit" aria-describedby="Gas Unit Rate (pence/unit)" asp-for="Tariff.GasUnitRate" />
                     <span asp-validation-for="Tariff.GasUnitRate"></span>
                 </div>
             </div>
             <div class="col">
                 <div class="mb-3">
                     <label class="form-label" for="electric-standing">Electric Standing Rate (pence/day)</label>
-                    <input type="number" step=".001" class="form-control" id="electric-standing" aria-describedby="Electric Standing Rate (pence/day)" asp-for="Tariff.ElectricStandingRate" />
+                    <input type="number" step=".0001" class="form-control" id="electric-standing" aria-describedby="Electric Standing Rate (pence/day)" asp-for="Tariff.ElectricStandingRate" />
                     <span asp-validation-for="Tariff.ElectricStandingRate"></span>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="gas-standing">Gas Standing Rate (pence/day)</label>
-                    <input type="number" step=".001" class="form-control" id="gas-standing" aria-describedby="Gas Standing Rate (pence/day)" asp-for="Tariff.GasStandingRate" />
+                    <input type="number" step=".0001" class="form-control" id="gas-standing" aria-describedby="Gas Standing Rate (pence/day)" asp-for="Tariff.GasStandingRate" />
                     <span asp-validation-for="Tariff.GasStandingRate"></span>
                 </div>
             </div>
